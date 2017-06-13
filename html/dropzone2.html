@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>dropzone拖曳上传2</title>
+		<link rel="stylesheet" href="../css/dropzone.css" />
+		<script type="text/javascript" src="../js/dropzone.js" ></script>
+	</head>
+	<body>
+		<div id="dropz2" class="dropzone"></div>
+		<script>
+			var myDropzone = new Dropzone("#dropz2", { 
+				url: "upload.php", 
+			    maxFiles: 10,
+		        maxFilesize: 512
+			});
+		</script>
+	</body>
+	
+</html>

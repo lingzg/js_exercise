@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>二维码</title>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
+		<script type="text/javascript" src="../js/qrcode.js"></script>
+		<script type="text/javascript" src="../js/jquery.qrcode.js"></script>
+		<script type="text/javascript" src="../js/guid.js" ></script>
+		<!--<script type="text/javascript" src="../js/jquery.qrcode.min.js" ></script>-->
+		<style>
+			ul{margin:0;padding:0;list-style: none;display: table;}
+			ul li{position:relative;float:left;margin: 5px;border:1px solid #dedede;overflow: visible;}
+			/*ul li div{border:1px solid #FF0000;}*/
+		</style>
+	</head>
+	<body>
+		<ul></ul>
+	</body>
+	<script type="text/javascript">
+		$(function () {
+			var n=1,timer;
+			timer=setInterval(function () {
+				if(n>=1000){
+					clearInterval(timer);
+				}
+				addQrcode();
+				n++;
+			},100)
+		})
+		function addQrcode (n) {
+			if(!n||n<1){
+				n=1;
+			}
+			var guid = new GUID();
+			for(var i=0;i<n;i++){
+				var text=guid.newGUID().replace(/-/g,'').substr(0,20);
+				$('ul').append('<li><div></div><span>'+text+'</span></li>');
+				$("ul li:last div").qrcode({
+					render: "table", //table方式 
+					width: 200, //宽度 
+					height: 200, //高度 
+					background : "#ffffff",
+                    foreground : "#ff0000",
+					text: text
+				});
+			}
+		}
+
+		function toUtf8(str) {
+			var out, i, len, c;
+			out = "";
+			len = str.length;
+			for(i = 0; i < len; i++) {
+				c = str.charCodeAt(i);
+				if((c >= 0x0001) && (c <= 0x007F)) {
+					out += str.charAt(i);
+				} else if(c > 0x07FF) {
+					out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+					out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+					out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+				} else {
+					out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+					out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+				}
+			}
+			return out;
+		}
+	</script>
+</html>

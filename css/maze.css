@@ -1,0 +1,47 @@
+body {
+	background-color: green;
+}
+
+#map {
+	marign: 100px auto;
+	width: 330px;
+	font-family: "微软雅黑";
+	font-size: 12px;
+}
+
+#map:after {
+	content: "";
+	clear: both;
+}
+
+#map> div {
+	width: 60px;
+	line-height: 60px;
+	height: 60px;
+	margin: 2px 0 0 2px;
+	background-color: #ccc;
+	float: left;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+}
+
+#map> div.box8 {
+	background-color: green;
+}
+
+#map> div.box5 {
+	background-color: red;
+}
+
+#map> div.box1 {
+	background-color: #f93;
+}
+
+#map> div.step {
+	background-color: green;
+}
+
+#map> div.null {
+	background-color: white;
+}

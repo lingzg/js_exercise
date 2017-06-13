@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>dropzone拖曳上传3</title>
+		<link rel="stylesheet" href="../css/dropzone.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/dropzone.js" ></script>
+	</head>
+	<body>
+		<div id="dropz3" class="dropzone"></div>
+		<script>
+			$("#dropz3").dropzone({ 
+			    url: "upload.php", 
+			    maxFiles: 10,
+		        maxFilesize: 512
+			})
+		</script>
+	</body>
+	
+</html>

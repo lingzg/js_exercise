@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+		#allmap{width:100%;height:100%;}
+		/*#r-result{width:100%;margin-top:5px;}
+		p{margin:5px; font-size:14px;}*/
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=k3hGTr3v8pGucDGppYdObbLkwU7lGLSO"></script>
+	<title>叠加魔兽地图</title>
+</head>
+<body>
+	<div id="allmap"></div>
+	<!--<div id="r-result">
+		<input type="button" onclick="add_control();" value="添加" />
+		<input type="button" onclick="delete_control();" value="删除" />
+	</div>-->
+</body>
+</html>
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map('allmap');
+	map.addControl(new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL}));
+	map.centerAndZoom(new BMap.Point(114.316, 30.581), 15);
+	
+	var tileLayer = new BMap.TileLayer();
+	tileLayer.getTilesUrl = function(tileCoord, zoom) {
+		console.log(tileCoord);
+		console.log(zoom);
+		var x = tileCoord.x;
+		var y = tileCoord.y;
+		var url = 'http://developer.baidu.com/map/jsdemo/demo/tiles/' + zoom + '/tile' + x + '_' + y + '.png';     //根据当前坐标，选取合适的瓦片图
+		console.log(url);
+		return url;
+	}
+	
+	var geoc = new BMap.Geocoder();//逆地址解析
+	map.enableScrollWheelZoom();
+   	var pointMarker=new BMap.Marker(new BMap.Point(114.316, 30.581));
+   	pointMarker.enableDragging();
+   	pointMarker.setLabel(new BMap.Label("地点",{offset:new BMap.Size(20,-10)}));
+   	pointMarker.addEventListener("dragend", function(){
+		geoc.getLocation(this.getPosition(), function(rs){
+			var addComp = rs.addressComponents;
+			var address=addComp.city+addComp.district+addComp.street+addComp.streetNumber;
+			console.log(address);
+			
+		});
+	});
+	map.addOverlay(pointMarker);
+	
+	map.addEventListener("click", function(e){    
+	 	geoc.getLocation(e.point, function(rs){
+			var addComp = rs.addressComponents;
+			var address=addComp.city+addComp.district+addComp.street+addComp.streetNumber;
+			console.log(address);
+		}); 
+	});
+   	
+   	
+	function add_control(){
+		map.addTileLayer(tileLayer);
+	}
+	function delete_control(){
+		map.removeTileLayer(tileLayer);
+	}
+//	add_control();
+</script>
