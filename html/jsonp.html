@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>jsonp跨域</title>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+	</head>
+	<body>
+		<table>
+			<thead>
+				<tr><td>ID</td><td>名称</td><td>内容</td></tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+		<!--
+        	作者：elvis1005@yeah.net
+        	时间：2017-06-29
+        	描述：jsonp跨域方法一，原生js
+        -->
+		<script>
+			// 得到查询结果后的回调函数
+		    var jsonpHandler = function(data){
+		        var tr = '<tr><td>'+data.skillId+'</td><td>'+data.skillName+'</td><td>'+data.skillContent+'</td></tr>';
+		        $('tbody').append(tr);
+		    };
+		    // 提供jsonp服务的url地址（不管是什么类型的地址，最终生成的返回值都是一段javascript代码）
+		    var url = "http://127.0.0.1:8080/gongdi/rescueSkills/jsonp?id=1&callback=jsonpHandler";
+		    // 创建script标签，设置其属性
+		    var script = document.createElement('script');
+		    script.setAttribute('src', url);
+		    // 把script标签加入head，此时调用开始
+		    document.getElementsByTagName('body')[0].appendChild(script);
+		</script>
+		
+		<script src="http://127.0.0.1:8080/gongdi/rescueSkills/jsonp?id=2&callback=jsonpHandler"></script>
+		
+		<!--
+        	作者：elvis1005@yeah.net
+        	时间：2017-06-29
+        	描述：jsonp跨域方法二，jQuery ajax封装
+        -->
+		<script>
+			$.ajax({
+				type:"get",
+				url:"http://127.0.0.1:8080/gongdi/rescueSkills/jsonp",
+				dataType:'jsonp',
+		        data:{id:3},
+		        jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+//           	jsonpCallback:"jsonpHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+		        success : function (data) {
+		        	jsonpHandler(data);
+		        }
+			});
+			
+			$.getJSON("http://127.0.0.1:8080/gongdi/rescueSkills/jsonp?callback=?",
+			{id: 4},
+		    function(data) {  
+		        jsonpHandler(data);
+		    });
+		    
+		     $.get('http://127.0.0.1:8080/gongdi/rescueSkills/jsonp?callback=?',
+		     {id: 5},
+		     function (data) { 
+		     	jsonpHandler(data);
+		     }, 'jsonp');
+		</script>
+	</body>
+</html>
