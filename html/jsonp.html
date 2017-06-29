@@ -64,5 +64,14 @@
 		     	jsonpHandler(data);
 		     }, 'jsonp');
 		</script>
+		<!--服务端代码:
+		@RequestMapping(value = "/jsonp", method = RequestMethod.GET)
+		public void jsonp(HttpServletRequest request,HttpServletResponse response) throws IOException{
+			String callback = request.getParameter("callback");
+			String id = request.getParameter("id");
+			RescueSkills skill = rescueSkillsService.getById(new Long(id));
+			JSONObject s = JSONObject.fromObject(skill);
+			writeJSON(response, callback+"("+s+")");
+		}-->
 	</body>
 </html>
