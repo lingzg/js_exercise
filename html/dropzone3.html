@@ -10,11 +10,38 @@
 	<body>
 		<div id="dropz3" class="dropzone"></div>
 		<script>
-			$("#dropz3").dropzone({ 
-			    url: "upload.php", 
-			    maxFiles: 10,
-		        maxFilesize: 512
-			})
+			var fileList = [];
+			$("#dropz").dropzone({
+		        url: "127.0.0.1:8080/gongdi/file/uploadFile",
+		        addRemoveLinks: true,
+		        dictRemoveLinks: "x",
+		        dictCancelUpload: "x",
+		        maxFiles: 10,
+		        maxFilesize: 50,//MB
+//		        acceptedFiles: ".doc,.pdf,.txt",
+		        init: function() {
+		            this.on("success", function(file) {
+		            	console.log(file);
+		                var result = JSON.parse(file.xhr.responseText);
+		                if(result.success===true){
+		                	fileList = fileList.concat(result.data);
+		                }
+		                console.log(fileList);
+		            });
+		            this.on("removedfile", function(file) {
+		                console.log(file);
+		                var i,remv,name=file.name;
+		            	for(i=0;i<fileList.length;i++){
+		            		if(fileList[i].fileName==name){
+		            			remv = fileList.splice(i,1);
+		            			break;
+		            		}
+		            	}
+		            	console.log(remv);
+		            	console.log(fileList);
+		            });
+		        }
+		    });
 		</script>
 	</body>
 	
