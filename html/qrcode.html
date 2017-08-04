@@ -21,13 +21,13 @@
 	<script type="text/javascript">
 		$(function () {
 			var n=1,timer;
-			timer=setInterval(function () {
-				if(n>=1000){
-					clearInterval(timer);
-				}
+//			timer=setInterval(function () {
+//				if(n>=1000){
+//					clearInterval(timer);
+//				}
 				addQrcode();
-				n++;
-			},100)
+//				n++;
+//			},100)
 		})
 		function addQrcode (n) {
 			if(!n||n<1){
@@ -35,16 +35,19 @@
 			}
 			var guid = new GUID();
 			for(var i=0;i<n;i++){
-				var text=guid.newGUID().replace(/-/g,'').substr(0,20);
-				$('ul').append('<li><div></div><span>'+text+'</span></li>');
+				var text=guid.newGUID().replace(/-/g,'');
+				console.log(text);
+				$('ul').append('<li><div><img id="qrCodeIco" src="../img/fu.jpg" style="position: absolute;width: 57px; height: 57px;" /></div></li>');
 				$("ul li:last div").qrcode({
 					render: "table", //table方式 
 					width: 200, //宽度 
 					height: 200, //高度 
 					background : "#ffffff",
-                    foreground : "#ff0000",
+                    foreground : "#000000",
 					text: text
 				});
+				var margin = ($("ul li:last div").height() - $("ul li:last div img").height()) / 2; //控制Logo图标的位置
+				$("ul li:last div img").css("margin", margin);
 			}
 		}
 
