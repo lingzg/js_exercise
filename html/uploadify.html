@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>uploadify文件上传</title>
+		<link rel="stylesheet" href="../css/uploadify.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<script type="text/javascript" src="../js/jquery.uploadify.js" ></script>
+	</head>
+	<body>
+		<input type="file" name="file_upload" id="file_upload" />
+		<script type="text/javascript">
+	    $(function() {
+	        $('#file_upload').uploadify({
+	            'swf'      : '../resource/uploadify.swf',
+	            'uploader' : '172.16.1.15/gongdi2/file/uploadFile',
+	            'onUploadSuccess': function (file, data, response) {
+	            	console.log(file);
+	            	console.log(data);
+	            }
+	        });
+	    });
+    </script>
+	</body>
+</html>
