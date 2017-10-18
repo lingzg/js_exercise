@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>make3DCon</title>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<style>
+			* {
+			  margin: 0;
+			  padding: 0;
+			}
+			body {
+			  background-color: #454545;
+			}
+			.make3DCon {
+			  width: 300px;
+			  height: 300px;
+			  margin: 100px auto;
+			  position: relative;
+			  background-color: rgba(255, 255, 255, 0.5);
+			  transform-style: preserve-3d;
+			  -webkit-transform-style: preserve-3d;
+			  transform-origin: 50% 50% -150px;
+			  -webkit-transform-origin: 50% 50% -150px;
+			  transition: transform 1s;
+			  -webkit-transition: transform 1s;
+			}
+			.make3DCon > div {
+			  width: 100%;
+			  height: 100%;
+			  position: absolute;
+			  left: 0;
+			  top: 0;
+			  text-align: center;
+			  line-height: 300px;
+			  font-size: 50px;
+			}
+			.make3DCon div:nth-child(1) {
+			  background-color: rgba(255, 0, 0, 0.3);
+			}
+			.make3DCon div:nth-child(2) {
+			  background-color: rgba(0, 0, 0, 0.5);
+			  transform: translate3d(0, 0, -300px);
+			}
+			.make3DCon div:nth-child(3) {
+			  background-color: rgba(0, 255, 0, 0.5);
+			  transform: rotateY(-90deg) translate3d(-150px, 0px, 150px);
+			}
+			.make3DCon div:nth-child(4) {
+			  background-color: rgba(0, 0, 255, 0.5);
+			  transform: rotateY(90deg) translate3d(150px, 0px, 150px);
+			}
+			.make3DCon div:nth-child(5) {
+			  background-color: rgba(100, 100, 255, 0.5);
+			  transform: rotateX(90deg) translate3d(0, -150px, 150px);
+			}
+			.make3DCon div:nth-child(6) {
+			  background-color: rgba(200, 200, 255, 0.5);
+			  transform: rotateX(-90deg) translate3d(0, 150px, 150px);
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 3d场景 -->
+		<div class="make3DCon" id="make3DCon">
+			<!-- 前后 -->
+			<div>前</div>
+	
+			<div>后</div>
+			<!-- 前后 -->
+	
+			<!-- 左右 -->
+			<div>左</div>
+			<div>右</div>
+			<!-- 左右 -->
+		
+			<!-- 上下 -->
+			<div>上</div>
+			<div>下</div>
+			<!-- 上下 -->
+	
+		</div>
+		<!-- 3d场景 end!-->
+	</body>
+	<script>
+		$(function(){
+			var $make3DCon  = $('#make3DCon'),
+				X           = 0,
+				Y           = 0;
+		
+			$(document).keydown(function(e){
+				var nowKeyCode = e.keyCode;
+				handler(nowKeyCode);
+			});
+			function handler (nowKeyCode) {
+				switch( nowKeyCode ){
+					case 38://上
+					X += 45;
+					$make3DCon.css({
+						'transform':'rotateX('+ X +'deg) rotateY('+ Y +'deg)'
+					});
+					break;
+		
+					case 40://下
+					X -= 45;
+					$make3DCon.css({
+						'transform':'rotateX('+ X +'deg) rotateY('+ Y +'deg)'
+					});
+					break;
+		
+					case 37://左边
+					Y += 45;
+					$make3DCon.css({
+						'transform':'rotateX('+ X +'deg) rotateY('+ Y +'deg)'
+					});
+					break;
+		
+					case 39://右边
+					Y -= 45;
+					$make3DCon.css({
+						'transform':'rotateX('+ X +'deg) rotateY('+ Y +'deg)'
+					});
+					break;
+				}
+			}
+			handler(40);
+			handler(39);
+			setInterval(function  () {
+//				handler(39);
+			},10)
+		
+		});
+	</script>
+</html>
